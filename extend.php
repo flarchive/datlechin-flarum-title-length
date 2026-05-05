@@ -1,0 +1,30 @@
+<?php
+
+/*
+ * This file is part of datlechin/flarum-title-length.
+ *
+ * Copyright (c) 2022 Ngo Quoc Dat.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
+namespace Datlechin\TitleLength;
+
+use Flarum\Api\Resource\DiscussionResource;
+use Flarum\Extend;
+
+return [
+    (new Extend\Frontend('admin'))
+        ->js(__DIR__ . '/js/dist/admin.js'),
+
+    new Extend\Locales(__DIR__ . '/locale'),
+
+    (new Extend\ApiResource(DiscussionResource::class))
+        ->field('title', OverrideTitleLength::class),
+
+    (new Extend\Settings())
+        ->default('datlechin-title-length.limit', true)
+        ->default('datlechin-title-length.min', 3)
+        ->default('datlechin-title-length.max', 80),
+];
